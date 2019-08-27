@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Hydrology web app">
+    <meta name="theme-color" content="#2F3BA2">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no">
+    <title>Tulipa</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css" integrity="sha384-rtJEYb85SiYWgfpCr0jn174XgJTn4rptSOQsMroFBPQSGLdOC5IbubP6lJ35qoM9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,500,600,700">
+    <link rel="stylesheet" href="styles/main.css">
+  </head>
+  <body>
+    <ul>
+      <li class="head">
+        <img src="images/logo.jpg" style="float: left;">
+        <h1>Tulipa</h1>
+        <h3>Hydrology web app</h3>
+        <!-- <a href="https://github.com/finkler"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_gray_6d6d6d.png?resize=149%2C149" class="attachment-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
+      </li>
+      <li>
+        <h3 class="accordion">Documentation <i class="fas fa-caret-down middle"></i></h3>
+        <div class="panel">
+          <h4>Input file</h4>
+          <h4>Output file</h4>
+        </div>
+      </li>
+      <li>
+        <h3 class="accordion">Application <i class="fas fa-caret-down middle"></i></h3>
+        <div class="panel">
+          <form method="post" enctype="multipart/form-data" action="http://127.0.0.1:5000/execute">
+            <p>
+              <label for="data-file"><h4>Select data file</h4></label>
+              <input id="data-file" name="data-file" type="file" required>
+            </p>
+            <h4>Choose models</h4>
+            <p><fieldset>
+              <legend>Soil water characteristic curve model estimation</legend>
+              <label><input type="checkbox" name="model" value="vg" checked>van Genuchten<sup>1</sup></label>
+              <label><input type="checkbox" name="model" value="fx">Fredlund and Xing<sup>2</sup></label>
+            </fieldset></p>
+            <p><fieldset disabled>
+              <legend>Hydraulic conductivity estimation</legend>
+              <label><input type="checkbox" name="model" value="0">Hazen</label>
+              <label><input type="checkbox" name="model" value="1">Slichter</label>
+              <label><input type="checkbox" name="model" value="2">Terzaghi</label>
+              <label><input type="checkbox" name="model" value="3">Beyer</label>
+              <label><input type="checkbox" name="model" value="4">Sauerbrei</label>
+              <label><input type="checkbox" name="model" value="5">Krüger</label>
+              <label><input type="checkbox" name="model" value="6">Kozeny</label>
+              <label><input type="checkbox" name="model" value="7">Zunker</label>
+              <label><input type="checkbox" name="model" value="8">Zamarin</label>
+              <label><input type="checkbox" name="model" value="9">USBR</label>
+              <label><input type="checkbox" name="model" value="10">Barr</label>
+              <label><input type="checkbox" name="model" value="11">Alyamani and Sen</label>
+              <label><input type="checkbox" name="model" value="12">Chapuis</label>
+              <label><input type="checkbox" name="model" value="13">Krumbein and Monk</label>
+            </fieldset></p>
+            <p><fieldset>
+              <legend>Sediment classification</legend>
+              <label><input type="checkbox" name="model" value="bp" checked>Blott and Pye<sup>3</sup></label>
+            </fieldset></p>
+            <p class="flex-container"><button type="button" onclick="check('all');">Select All</button>
+               <button type="button" onclick="check('none');">Clear Selection</button>
+               <button type="button" onclick="check('invert')">Invert Selection</button></p>
+            <p><button type="submit" class="btn"><i class="fas fa-cog"></i> Execute</button></p>
+          </form>
+        </div>
+      </li>
+      <li>
+        <h3 class="accordion">References <i class="fas fa-caret-down middle"></i></h3>
+        <div class="panel">
+          <ol>
+            <li>Van Genuchten, M.Th. (1980): A Closed-form Equation for Predicting the Hydraulic Conductivity of Unsaturated Soils.
+              <span class="journal">Soil Science Society of America Journal</span>, 55(4): 892-898,
+              <a href="https://doi.org/10.2136/sssaj1980.03615995004400050002x" target="_blank">doi:10.2136/sssaj1980.03615995004400050002x</a>
+            </li>
+            <li>Fredlund, D.G. and Xing, A. (1994): Equations for the soil-water characteristic curve.
+              <span class="journal">Canadian Geotechnical Journal</span>, 31(4): 521-532,
+              <a href="https://doi.org/10.1139/t94-061" target="_blank">doi:10.1139/t94-061</a>
+            </li>
+            <li>
+              Blott, S.J. and Pye, K. (2012): Particle size scales and classification of sediment types based on particle size distributions: Review and recommended procedures.
+              <span class="journal">Sedimentology</span>, 59(7): 2071-2096,
+              <a href="https://doi.org/10.1111/j.1365-3091.2012.01335.x" target="_blank">doi:10.1111/j.1365-3091.2012.01335.x</a>
+            </li>
+          </ol>
+        </div>
+      </li>
+      <li>
+        <h3 class="accordion">Author <i class="fas fa-caret-down middle"></i></h3>
+        <div class="panel">
+          <p>
+            &copy; 2019 Thomas Kreuzer
+            <span class="social">
+              <a href="https://github.com/finkler" target="_blank"><i class="fab fa-github"></i></a>
+              <a href="mailto:thomas.kreuzer@uni-wuerzburg.de?subject=Tulipa"><i class="fas fa-envelope"></i></a>
+            </span>
+          </p>
+        </div>
+      </li>
+    </ul>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
