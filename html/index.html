@@ -155,69 +155,105 @@
             <fieldset>
               <legend>Soil water characteristic curve model estimation</legend>
               <label
-                ><input type="checkbox" name="model" value="vg" checked />van
+                ><input type="checkbox" name="swcc" value="vg" checked />van
                 Genuchten<sup>1</sup></label
-              >
-              <label
-                ><input type="checkbox" name="model" value="fx" />Fredlund and
-                Xing<sup>2</sup></label
-              >
-            </fieldset>
-            <fieldset disabled>
-              <legend>Hydraulic conductivity estimation<sup>3</sup></legend>
-              <label
-                ><input type="checkbox" name="model" value="0" />Hazen</label
-              >
-              <label
-                ><input type="checkbox" name="model" value="1" />Slichter</label
-              >
-              <label
-                ><input type="checkbox" name="model" value="2" />Terzaghi</label
-              >
-              <label
-                ><input type="checkbox" name="model" value="3" />Beyer</label
               >
               <label
                 ><input
                   type="checkbox"
-                  name="model"
-                  value="4"
+                  name="swcc"
+                  value="fx"
+                  disabled
+                />Fredlund and Xing<sup>2</sup></label
+              >
+            </fieldset>
+            <fieldset>
+              <legend>Hydraulic conductivity estimation<sup>3</sup></legend>
+              <label
+                ><input type="checkbox" name="dwhc" value="hazen" />Hazen</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="hc"
+                  value="slichter"
+                />Slichter</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="hc"
+                  value="terzaghi"
+                />Terzaghi</label
+              >
+              <label
+                ><input type="checkbox" name="hc" value="beyer" />Beyer</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="hc"
+                  value="sauerbrei"
                 />Sauerbrei</label
               >
               <label
-                ><input type="checkbox" name="model" value="5" />Krüger</label
+                ><input
+                  type="checkbox"
+                  name="hc"
+                  value="0"
+                  disabled
+                />Krüger</label
               >
               <label
-                ><input type="checkbox" name="model" value="6" />Kozeny</label
+                ><input
+                  type="checkbox"
+                  name="hc"
+                  value="0"
+                  disabled
+                />Kozeny</label
               >
               <label
-                ><input type="checkbox" name="model" value="7" />Zunker</label
+                ><input
+                  type="checkbox"
+                  name="hc"
+                  value="0"
+                  disabled
+                />Zunker</label
               >
               <label
-                ><input type="checkbox" name="model" value="8" />Zamarin</label
+                ><input
+                  type="checkbox"
+                  name="hc"
+                  value="0"
+                  disabled
+                />Zamarin</label
               >
               <label
-                ><input type="checkbox" name="model" value="9" />USBR</label
+                ><input type="checkbox" name="hc" value="usbr" />USBR</label
               >
               <label
-                ><input type="checkbox" name="model" value="10" />Barr</label
+                ><input type="checkbox" name="hc" value="barr" />Barr</label
               >
               <label
-                ><input type="checkbox" name="model" value="11" />Alyamani and
-                Sen</label
+                ><input type="checkbox" name="hc" value="0" disabled />Alyamani
+                and Sen</label
               >
               <label
-                ><input type="checkbox" name="model" value="12" />Chapuis</label
+                ><input
+                  type="checkbox"
+                  name="hc"
+                  value="chapuis"
+                />Chapuis</label
               >
               <label
-                ><input type="checkbox" name="model" value="13" />Krumbein and
-                Monk</label
+                ><input type="checkbox" name="hc" value="krumbein" />Krumbein
+                and Monk</label
               >
             </fieldset>
             <fieldset>
               <legend>Sediment classification</legend>
               <label
-                ><input type="checkbox" name="model" value="bp" checked />Blott
+                ><input type="checkbox" name="class" value="bp" checked />Blott
                 and Pye<sup>4</sup></label
               >
             </fieldset>

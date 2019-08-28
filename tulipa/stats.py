@@ -18,6 +18,7 @@ class rv_distribution:
 class loglap_gen(rv_distribution):
     def __init__(self, d=1, a=1, b=0):
         self.shapes = np.array([d, a, b])
+        self.bounds = ([0, 0, 0], np.inf)
 
     def _cdf(self, x, d, a, b):
         x = np.asarray(x)
@@ -99,6 +100,7 @@ class loglap_gen(rv_distribution):
 class lognorm_gen(rv_distribution):
     def __init__(self, s=1, m=0):
         self.shapes = np.array([s, m])
+        self.bounds = ([0, -np.inf], np.inf)
 
     def _cdf(self, x, s, m):
         x = np.asarray(x)
@@ -166,6 +168,11 @@ def generic_fit(data):
     perr = []
     for rvc in rv_continous:
         rvc.shapes, pcov = curve_fit(
-            rvc._cdf, xdata, ydata, p0=rvc.shapes, jac=rvc._fit)
+            rvc._cdf,
+            xdata,
+            ydata,
+            bounds=rvc.bounds,
+            p0=rvc.shapes,
+            jac=rvc._fit)
         perr.append(np.sqrt(np.abs(np.diag(pcov)).mean()))
     return rv_continous[np.argmin(perr)]

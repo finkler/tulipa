@@ -34,7 +34,7 @@ class CNEAP:
         return self._theta(r)
 
     def _theta(self, r):
-        return self.n * self.rvc.cdf(r)
+        return self.n * self.rvc.cdf(r * 1e-3)
 
     def fit(self, model="vg", r=None):
         if r is None:

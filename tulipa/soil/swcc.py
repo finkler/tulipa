@@ -8,7 +8,7 @@ class swcc_model:
 class vgmodel_gen(swcc_model):
     def __init__(self):
         self.params = [0.005, 2.0]
-        self.bounds = ([0, 1], [0.5, np.inf])
+        self.bounds = ([0, 1], [1, np.inf])
 
     def _jac(self, h, a, n):
         h = np.asarray(h)
@@ -40,7 +40,7 @@ class fxmodel_gen(swcc_model):
         self.params = [0.005, 0.5, 2.0]
         self.bounds = ([0, 0, 1], np.inf)
 
-    def _jac(self, h, a, n):
+    def _jac(self, h, a, m, n):
         h = np.asarray(h)
         scalar_input = False
         if h.ndim == 0:
