@@ -1,103 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Hydrology web app">
-    <meta name="theme-color" content="#2F3BA2">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no">
+    <meta charset="UTF-8" />
+    <meta name="description" content="Hydrology web app" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,shrink-to-fit=no"
+    />
     <title>Tulipa</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css" integrity="sha384-rtJEYb85SiYWgfpCr0jn174XgJTn4rptSOQsMroFBPQSGLdOC5IbubP6lJ35qoM9" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,500,600,700">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.10.2/css/all.css"
+      integrity="sha384-rtJEYb85SiYWgfpCr0jn174XgJTn4rptSOQsMroFBPQSGLdOC5IbubP6lJ35qoM9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,500,600,700"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
   </head>
   <body>
     <ul>
       <li class="head">
-        <img src="images/logo.jpg" style="float: left;">
+        <img src="images/logo.jpg" style="float: left;" />
         <h1>Tulipa</h1>
         <h3>Hydrology web app</h3>
         <!-- <a href="https://github.com/finkler"><img width="149" height="149" src="https://github.blog/wp-content/uploads/2008/12/forkme_right_gray_6d6d6d.png?resize=149%2C149" class="attachment-full" alt="Fork me on GitHub" data-recalc-dims="1"></a> -->
       </li>
       <li>
-        <h3 class="accordion">Documentation <i class="fas fa-caret-down middle"></i></h3>
+        <h3 class="accordion">
+          Documentation <i class="fas fa-caret-down middle"></i>
+        </h3>
         <div class="panel">
+          <p>
+            Tulipa is a hydrology web app that infers hydrological parameters
+            from common soil parameters. Specifically, hydraulic conductivity
+            and parameters for a water retention curve model are derived from a
+            grain size distribution, bulk- and particle-density.
+          </p>
+
           <h4>Input file</h4>
-          <a href="https://raw.githubusercontent.com/finkler/tulipa/master/examples/datafile.dat">Example file</a>
+          <p>
+            The input file consist of one record per line. All lines starting
+            with '#' are ignored.
+          </p>
+
+          <p>
+            A record has 13 columns separated by whitespace. The first column is
+            the name of the record without any whitespace. The second to 11th
+            column are percent passings &mdash; normalized to 1, i.e. the sum of
+            the percent passings is 1 &mdash; of sieves with the following
+            sizes:
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Column</th>
+                <th>Sediment</th>
+                <th>Sieve size [mm]</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2</td>
+                <td>Clay</td>
+                <td>0.002</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Fine silt</td>
+                <td>0.0063</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Medium silt</td>
+                <td>0.02</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Coarse silt</td>
+                <td>0.063</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>Fine sand</td>
+                <td>0.2</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>Medium sand</td>
+                <td>0.63</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>Coarse sand</td>
+                <td>2.0</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>Fine gravel</td>
+                <td>6.3</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>Medium gravel</td>
+                <td>20.0</td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>Coarse gravel</td>
+                <td>63.0</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            The last two columns are the bulk density and the particle density
+            respectively [g/cm³].
+          </p>
+          <p>
+            <a
+              href="https://raw.githubusercontent.com/finkler/tulipa/master/examples/datafile.dat"
+              >Example file</a
+            >
+          </p>
+
           <h4>Output file</h4>
         </div>
       </li>
       <li>
-        <h3 class="accordion">Application <i class="fas fa-caret-down middle"></i></h3>
+        <h3 class="accordion">
+          Application <i class="fas fa-caret-down middle"></i>
+        </h3>
         <div class="panel">
-          <form method="post" enctype="multipart/form-data" action="http://127.0.0.1:5000/execute">
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="http://127.0.0.1:5000/execute"
+            onsubmit="return validateForm()"
+          >
             <p>
               <label for="data-file"><h4>Select data file</h4></label>
-              <input id="data-file" name="data-file" type="file" required>
+              <input id="data-file" name="data-file" type="file" />
             </p>
+
             <h4>Choose models</h4>
-            <p><fieldset>
+            <fieldset>
               <legend>Soil water characteristic curve model estimation</legend>
-              <label><input type="checkbox" name="model" value="vg" checked>van Genuchten<sup>1</sup></label>
-              <label><input type="checkbox" name="model" value="fx">Fredlund and Xing<sup>2</sup></label>
-            </fieldset></p>
-            <p><fieldset disabled>
-              <legend>Hydraulic conductivity estimation</legend>
-              <label><input type="checkbox" name="model" value="0">Hazen</label>
-              <label><input type="checkbox" name="model" value="1">Slichter</label>
-              <label><input type="checkbox" name="model" value="2">Terzaghi</label>
-              <label><input type="checkbox" name="model" value="3">Beyer</label>
-              <label><input type="checkbox" name="model" value="4">Sauerbrei</label>
-              <label><input type="checkbox" name="model" value="5">Krüger</label>
-              <label><input type="checkbox" name="model" value="6">Kozeny</label>
-              <label><input type="checkbox" name="model" value="7">Zunker</label>
-              <label><input type="checkbox" name="model" value="8">Zamarin</label>
-              <label><input type="checkbox" name="model" value="9">USBR</label>
-              <label><input type="checkbox" name="model" value="10">Barr</label>
-              <label><input type="checkbox" name="model" value="11">Alyamani and Sen</label>
-              <label><input type="checkbox" name="model" value="12">Chapuis</label>
-              <label><input type="checkbox" name="model" value="13">Krumbein and Monk</label>
-            </fieldset></p>
-            <p><fieldset>
+              <label
+                ><input type="checkbox" name="model" value="vg" checked />van
+                Genuchten<sup>1</sup></label
+              >
+              <label
+                ><input type="checkbox" name="model" value="fx" />Fredlund and
+                Xing<sup>2</sup></label
+              >
+            </fieldset>
+            <fieldset disabled>
+              <legend>Hydraulic conductivity estimation<sup>3</sup></legend>
+              <label
+                ><input type="checkbox" name="model" value="0" />Hazen</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="1" />Slichter</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="2" />Terzaghi</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="3" />Beyer</label
+              >
+              <label
+                ><input
+                  type="checkbox"
+                  name="model"
+                  value="4"
+                />Sauerbrei</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="5" />Krüger</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="6" />Kozeny</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="7" />Zunker</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="8" />Zamarin</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="9" />USBR</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="10" />Barr</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="11" />Alyamani and
+                Sen</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="12" />Chapuis</label
+              >
+              <label
+                ><input type="checkbox" name="model" value="13" />Krumbein and
+                Monk</label
+              >
+            </fieldset>
+            <fieldset>
               <legend>Sediment classification</legend>
-              <label><input type="checkbox" name="model" value="bp" checked>Blott and Pye<sup>3</sup></label>
-            </fieldset></p>
-            <p class="flex-container"><button type="button" onclick="check('all');">Select All</button>
-               <button type="button" onclick="check('none');">Clear Selection</button>
-               <button type="button" onclick="check('invert')">Invert Selection</button></p>
-            <p><button type="submit" class="btn"><i class="fas fa-cog"></i> Execute</button></p>
+              <label
+                ><input type="checkbox" name="model" value="bp" checked />Blott
+                and Pye<sup>4</sup></label
+              >
+            </fieldset>
+            <p class="flex-container">
+              <button type="button" onclick="check('all');">Select All</button>
+              <button type="button" onclick="check('none');">
+                Clear Selection
+              </button>
+              <button type="button" onclick="check('invert')">
+                Invert Selection
+              </button>
+            </p>
+
+            <p>
+              <button type="submit" class="btn">
+                <i class="fas fa-cog"></i> Execute
+              </button>
+            </p>
           </form>
         </div>
       </li>
       <li>
-        <h3 class="accordion">References <i class="fas fa-caret-down middle"></i></h3>
+        <h3 class="accordion">
+          References <i class="fas fa-caret-down middle"></i>
+        </h3>
         <div class="panel">
           <ol>
-            <li>Van Genuchten, M.Th. (1980): A Closed-form Equation for Predicting the Hydraulic Conductivity of Unsaturated Soils.
-              <span class="journal">Soil Science Society of America Journal</span>, 55(4): 892-898,
-              <a href="https://doi.org/10.2136/sssaj1980.03615995004400050002x" target="_blank">doi:10.2136/sssaj1980.03615995004400050002x</a>
-            </li>
-            <li>Fredlund, D.G. and Xing, A. (1994): Equations for the soil-water characteristic curve.
-              <span class="journal">Canadian Geotechnical Journal</span>, 31(4): 521-532,
-              <a href="https://doi.org/10.1139/t94-061" target="_blank">doi:10.1139/t94-061</a>
+            <li>
+              Van Genuchten, M.Th. (1980): A Closed-form Equation for Predicting
+              the Hydraulic Conductivity of Unsaturated Soils.
+              <span class="journal"
+                >Soil Science Society of America Journal</span
+              >, 55(4): 892-898,
+              <a
+                href="https://doi.org/10.2136/sssaj1980.03615995004400050002x"
+                target="_blank"
+                >doi:10.2136/sssaj1980.03615995004400050002x</a
+              >
             </li>
             <li>
-              Blott, S.J. and Pye, K. (2012): Particle size scales and classification of sediment types based on particle size distributions: Review and recommended procedures.
+              Fredlund, D.G. and Xing, A. (1994): Equations for the soil-water
+              characteristic curve.
+              <span class="journal">Canadian Geotechnical Journal</span>, 31(4):
+              521-532,
+              <a href="https://doi.org/10.1139/t94-061" target="_blank"
+                >doi:10.1139/t94-061</a
+              >
+            </li>
+            <li>
+              Devlin, J.F. (2015): HydrogeoSieveXL: an Excel-based tool to
+              estimate hydraulic conductivity from grain-size analysis.
+              <span class="journal">Hydrogeology Journal</span>, 23(4): 837-844,
+              <a href="https://doi.org/10.1007/s10040-015-1255-0"
+                >doi:10.1007/s10040-015-1255-0</a
+              >
+            </li>
+            <li>
+              Blott, S.J. and Pye, K. (2012): Particle size scales and
+              classification of sediment types based on particle size
+              distributions: Review and recommended procedures.
               <span class="journal">Sedimentology</span>, 59(7): 2071-2096,
-              <a href="https://doi.org/10.1111/j.1365-3091.2012.01335.x" target="_blank">doi:10.1111/j.1365-3091.2012.01335.x</a>
+              <a
+                href="https://doi.org/10.1111/j.1365-3091.2012.01335.x"
+                target="_blank"
+                >doi:10.1111/j.1365-3091.2012.01335.x</a
+              >
             </li>
           </ol>
         </div>
       </li>
       <li>
-        <h3 class="accordion">Author <i class="fas fa-caret-down middle"></i></h3>
+        <h3 class="accordion">
+          Author <i class="fas fa-caret-down middle"></i>
+        </h3>
         <div class="panel">
           <p>
             &copy; 2019 Thomas Kreuzer
             <span class="social">
-              <a href="https://github.com/finkler/tulipa.git" target="_blank"><i class="fab fa-github"></i></a>
-              <a href="mailto:thomas.kreuzer@uni-wuerzburg.de?subject=Tulipa"><i class="fas fa-envelope"></i></a>
+              <a href="https://github.com/finkler/tulipa.git" target="_blank"
+                ><i class="fab fa-github"></i
+              ></a>
+              <a href="mailto:thomas.kreuzer@uni-wuerzburg.de?subject=Tulipa"
+                ><i class="fas fa-envelope"></i
+              ></a>
             </span>
           </p>
         </div>

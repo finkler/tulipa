@@ -11,37 +11,11 @@ body {
   line-height: 1.5;
 }
 
-.accordion {
-  cursor: pointer;
+th {
+  font-weight: 500;
 }
-
-.drop-shadow {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.28);
-}
-
-.full-site-width {
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.journal {
-  font-style: italic;
-}
-
-.middle {
-  vertical-align: middle;
-  margin-left: 4px;
-}
-
-.panel {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.2s ease-out;
-}
-
-.social {
-  margin-left: 8px;
-  font-size: 22px;
+th, td {
+  padding: 0 12px;
 }
 
 h1, h3, h4 {
@@ -77,6 +51,45 @@ fieldset > label {
   flex: 0 1 20%;
   min-width: 154px;
 }
+
+.accordion {
+  cursor: pointer;
+}
+
+.drop-shadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.28);
+}
+
+.full-site-width {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.journal {
+  font-style: italic;
+}
+
+.message {
+  font-size: large;
+  text-align: center;
+}
+
+.middle {
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.panel {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease-out;
+}
+
+.social {
+  margin-left: 8px;
+  font-size: 22px;
+}
+
 
 .flex-container {
   display: flex;

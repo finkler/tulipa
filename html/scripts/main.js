@@ -26,11 +26,24 @@ function initApp() {
 }
 
 function check(s) {
-  var arr = document.querySelectorAll("input[type=checkbox]");
+  var cb = document.querySelectorAll("input[type=checkbox]:not([disabled])");
   var i;
 
-  for (i = 0; i < arr.length; i++) {
-    arr[i].checked = s === "all" || (!arr[i].checked && s === "invert");
+  for (i = 0; i < cb.length; i++) {
+    cb[i].checked = s === "all" || (!cb[i].checked && s === "invert");
+  }
+}
+
+function validateForm() {
+  var fc = document.getElementById("data-file");
+  if (fc.value === "") {
+    alert("No file chosen");
+    return false;
+  }
+  var cb = document.querySelectorAll("input[type=checkbox]:checked");
+  if (cb.length === 0) {
+    alert("No models selected");
+    return false;
   }
 }
 
