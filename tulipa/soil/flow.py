@@ -73,11 +73,11 @@ class krumbein(hc_model):
     def __init__(self, n, d):
         super().__init__(n, d)
         self.N = 7.501e-6
-        d5 = phi(self.d(0.05) * 10.0)
-        d16 = phi(self.d(0.16) * 10.0)
-        d50 = phi(self.d(0.5) * 10.0)
-        d84 = phi(self.d(0.84) * 10.0)
-        d95 = phi(self.d(0.95) * 10.0)
+        d5 = phi(self._d(0.05))
+        d16 = phi(self._d(0.16))
+        d50 = phi(self._d(0.5))
+        d84 = phi(self._d(0.84))
+        d95 = phi(self._d(0.95))
         si = (d84 - d16) / 4.0 + (d95 - d5) / 6.6
         self.de = np.exp(-1.31 * si)
         self.phi = np.power(2.0, (d16 + d50 + d84) / 3.0)

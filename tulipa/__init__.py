@@ -5,7 +5,12 @@ app.config['UPLOAD_FOLDER'] = '/tmp'
 import numpy as np
 
 from tulipa.soil import cneap, flow, sediment
-from tulipa import stats
+
+
+def fit(sieves):
+    if loglap.fit(sieves) < lognorm.fit(sieves):
+        return loglap
+    return lognorm
 
 
 def header(swcc, hc, cls):
@@ -15,8 +20,7 @@ def header(swcc, hc, cls):
 def process(arr, models=[]):
     key = arr.pop(0)
     pp = np.array([float(n) for n in arr[:10]])
-    sieves = np.column_stack((sediment.grain_sizes, pp))
-    rvc = stats.generic_fit(sieves)
+    gsd = sediment.ps_distribution(pp)
     rho_b = float(arr[10])
     rho_p = float(arr[11])
     n = 1. - rho_b / rho_p
@@ -24,22 +28,22 @@ def process(arr, models=[]):
     model = models[0]
     result = ["{:>6s}".format(key)]
     if len(model) > 0:
-        ap = cneap.CNEAP(rvc, n, rho_p)
+        ap = cneap.CNEAP(gsd, n, rho_p)
         result.append("{:9.4f}".format(n))
         result.append("{:9.4f}".format(ap.residual))
         for m in model:
-            swcc, _ = ap.fit(model=m)
+            swcc = ap.fit(model=m)
             for p in swcc.params:
-                result.append("{:9.4f}".format(p))
+                result.append("{:14.4f}".format(p))
 
     model = models[1]
     for m in model:
-        K = flow.estimate(m, n, rvc.ppf)
+        K = flow.estimate(m, n, gsd.d)
         result.append("{:18.4f}".format(K))
 
     model = models[2]
     if len(model) > 0:
-        c = sediment.classified(pp)
+        c = gsd.grading
         result.append("{:>13s}".format(c))
     return "".join(result)
 

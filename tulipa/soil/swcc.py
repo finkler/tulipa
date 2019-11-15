@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class swcc_model:
     def Theta(self, h):
         return self._Theta(h, *self.params)
@@ -8,7 +9,7 @@ class swcc_model:
 class vgmodel_gen(swcc_model):
     def __init__(self):
         self.params = [0.005, 2.0]
-        self.bounds = ([0, 1], [1, np.inf])
+        self.bounds = ([0, 1], np.inf)
 
     def _jac(self, h, a, n):
         h = np.asarray(h)
@@ -62,3 +63,7 @@ class fxmodel_gen(swcc_model):
 
     def _Theta(self, h, a, m, n):
         return np.power(np.log(np.exp(1.) + np.power(a * h, n)), -m)
+
+
+fxmodel = fxmodel_gen()
+vgmodel = vgmodel_gen()
