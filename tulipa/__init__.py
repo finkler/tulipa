@@ -43,7 +43,7 @@ def process(arr, models=[]):
     return "".join(result)
 
 
-@app.route('/execute', methods=['POST'])
+@app.route('/tulipa', methods=['POST'])
 def execute():
     models = [
         request.form.getlist('swcc'),
