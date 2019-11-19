@@ -21,18 +21,16 @@ class ps_distribution:
         else:
             self.sieves = self._normalized(sieves[:, 0], sieves[:, 1])
 
-        self._rv = lognorm
-        self._shapes = lognorm.fit(self.sieves)
-        # a = lognorm.fit(self.sieves)
-        # b = loglap.fit(self.sieves)
-        # rms1 = rmsd(lognorm.pdf(self._ps(), *a), self._pp())
-        # rms2 = rmsd(loglap.pdf(self._ps(), *b), self._pp())
-        # if rms1 < rms2:
-        #     self._rv = lognorm
-        #     self._shapes = a
-        # else:
-        #     self._rv = loglap
-        #     self._shapes = b
+        a = lognorm.fit(self.sieves)
+        b = loglap.fit(self.sieves)
+        rms1 = rmsd(lognorm.pdf(self._ps(), *a), self._pp())
+        rms2 = rmsd(loglap.pdf(self._ps(), *b), self._pp())
+        if rms1 < rms2:
+            self._rv = lognorm
+            self._shapes = a
+        else:
+            self._rv = loglap
+            self._shapes = b
 
         self.grading = self._grading()
         self.sort = self._sort()
