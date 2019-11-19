@@ -33,7 +33,9 @@ class ps_distribution:
             self._shapes = b
 
         self.grading = self._grading()
-        self.sort = self._sort()
+        self.sorting = self._sorting()
+        self.uniformity = self._uniformity()
+        self.porostiy = self._porosity()
 
     def _grading(self):
         def _sym(s, p):
@@ -71,13 +73,16 @@ class ps_distribution:
                     break
         return np.column_stack((ps, pp))
 
+    def _porosity(self):
+        return .255 * (1. + np.power(.83, self.uniformity))
+
     def _ps(self):
         return self.sieves[:, 0]
 
     def _pp(self):
         return self.sieves[:, 1]
 
-    def _sort(self):
+    def _sorting(self):
         d95 = phi(self.d(.95))
         d84 = phi(self.d(.84))
         d16 = phi(self.d(.16))
@@ -94,6 +99,9 @@ class ps_distribution:
         if si < 4.:
             return 'very poorly sorted'
         return 'extremely poorly sorted'
+
+    def _uniformity(self):
+        return self.d(.6) / self.d(.1)
 
     def d(self, p):
         return self._rv.ppf(p, *self._shapes)

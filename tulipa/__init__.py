@@ -7,12 +7,6 @@ import numpy as np
 from tulipa.soil import cneap, flow, sediment
 
 
-def fit(sieves):
-    if loglap.fit(sieves) < lognorm.fit(sieves):
-        return loglap
-    return lognorm
-
-
 def header(swcc, hc, cls):
     return "#"
 
@@ -30,7 +24,8 @@ def process(arr, models=[]):
     if len(model) > 0:
         ap = cneap.CNEAP(gsd, n, rho_p)
         result.append("{:9.4f}".format(n))
-        result.append("{:9.4f}".format(ap.residual))
+        result.append("{:9.4f}".format(gsd.porosity))
+        # result.append("{:9.4f}".format(ap.residual))
         for m in model:
             swcc = ap.fit(model=m)
             for p in swcc.params:
