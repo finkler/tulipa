@@ -1,7 +1,6 @@
 import numpy as np
 
-from scipy.stats import lognorm
-from tulipa.stats import loglap, rmsd
+from tulipa.stats import loglap_gen, lognorm_gen
 
 iso14688_1_2002 = np.array([
     0.002, 0.0063, 0.02, 0.063, 0.2, 0.63, 2.0, 6.3, 20.0, 63.0, 200.0, 630.0,
@@ -21,16 +20,9 @@ class ps_distribution:
         else:
             self.sieves = self._normalized(sieves[:, 0], sieves[:, 1])
 
-        a = lognorm.fit(self.sieves)
-        b = loglap.fit(self.sieves)
-        rms1 = rmsd(lognorm.pdf(self._ps(), *a), self._pp())
-        rms2 = rmsd(loglap.pdf(self._ps(), *b), self._pp())
-        if rms1 < rms2:
-            self._rv = lognorm
-            self._shapes = a
-        else:
-            self._rv = loglap
-            self._shapes = b
+        a = loglap_gen(self.sieves[:, 0], self.sieves[:, 1])
+        b = loginorm_gen(self.sieves[:, 0], self.sieves[:, 1])
+        self._rv = a if a.deverr < b.deverr else b
 
         self.grading = self._grading()
         self.sorting = self._sorting()
@@ -104,10 +96,10 @@ class ps_distribution:
         return self.d(.6) / self.d(.1)
 
     def d(self, p):
-        return self._rv.ppf(p, *self._shapes)
+        return self._rv.ppf(p)
 
     def mass(self, r):
-        return self._rv.pdf(r, *self._shapes)
+        return self._rv.pdf(r)
 
     def masscum(self, r):
-        return self._rv.cdf(r, *self._shapes)
+        return self._rv.cdf(r)

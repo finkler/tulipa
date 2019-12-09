@@ -15,17 +15,17 @@ def pressurehead(psi):
 
 
 class CNEAP:
-    def __init__(self, gsd, n, rho_p):
-        self.gsd = gsd
-        self.n = n
+    def __init__(self, psd, n=None, rho_p=2.65):
+        self._psd = psd
+        self.n = n if n is not None else psd.porosity
         self.rho_p = rho_p * 1e-3
-        self.residual = self._residual()
+        self.r = self._residual()
 
     def _norminv(self, T):
-        return t / (self.n - self.residual) + self.residual
+        return t / (self.n - self.r) + self.r
 
     def _norm(self, t):
-        return (t - self.residual) / (self.n - self.residual)
+        return (t - self.r) / (self.n - self.r)
 
     # return kPa
     def _psi(self, r):
@@ -44,7 +44,7 @@ class CNEAP:
         return self._theta(r)
 
     def _theta(self, r):
-        return self.n * self.gsd.masscum(r * 1e-3)
+        return self.n * self.psd.masscum(r * 1e-3)
 
     def fit(self, model="vg"):
         r = np.logspace(-20, 6, num=100, base=2.0) * 1e3
