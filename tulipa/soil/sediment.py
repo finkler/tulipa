@@ -21,7 +21,7 @@ class ps_distribution:
             self.sieves = self._normalized(sieves[:, 0], sieves[:, 1])
 
         a = loglap_gen(self.sieves[:, 0], self.sieves[:, 1])
-        b = loginorm_gen(self.sieves[:, 0], self.sieves[:, 1])
+        b = lognorm_gen(self.sieves[:, 0], self.sieves[:, 1])
         self._rv = a if a.deverr < b.deverr else b
 
         self.grading = self._grading()

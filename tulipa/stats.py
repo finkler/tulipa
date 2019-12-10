@@ -12,7 +12,8 @@ class rv_continous:
     def __init__(self, xdata, ydata):
         ydata = np.cumsum(ydata)
         self._pest, pcov = curve_fit(self._cdf, xdata, ydata)
-        self.deverr = rmsd(self._cdf(xdata, *self.pest), ydata)
+        self.deverr = rmsd(self._cdf(xdata, *self._pest), ydata)
+        self.mean, self.var, _, _ = self._stats(*self._pest)
 
     def cdf(self, x):
         return self._cdf(x, *self._pest)

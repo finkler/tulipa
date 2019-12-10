@@ -4,7 +4,8 @@ app.config['UPLOAD_FOLDER'] = '/tmp'
 
 import numpy as np
 
-from tulipa.soil import cneap, flow, sediment
+from tulipa.soil.cneap import CNEAP
+from tulipa.soil.sediment import ps_distribution
 
 
 def header(swcc, hc, cls):
@@ -14,32 +15,19 @@ def header(swcc, hc, cls):
 def process(arr, models=[]):
     key = arr.pop(0)
     pp = np.array([float(n) for n in arr[:10]])
-    gsd = sediment.ps_distribution(pp)
+    psd = ps_distribution(pp)
     rho_b = float(arr[10])
     rho_p = float(arr[11])
     n = 1. - rho_b / rho_p
 
-    model = models[0]
-    result = ["{:>6s}".format(key)]
-    if len(model) > 0:
-        ap = cneap.CNEAP(gsd, n, rho_p)
-        result.append("{:9.4f}".format(n))
-        result.append("{:9.4f}".format(gsd.porosity))
-        # result.append("{:9.4f}".format(ap.residual))
-        for m in model:
-            swcc = ap.fit(model=m)
-            for p in swcc.params:
-                result.append("{:14.4f}".format(p))
-
-    model = models[1]
-    for m in model:
-        K = flow.estimate(m, n, gsd.d)
-        result.append("{:18.4f}".format(K))
-
-    model = models[2]
-    if len(model) > 0:
-        c = gsd.grading
-        result.append("{:>13s}".format(c))
+    r, vga, vgn = CNEAP(psd, n, rho_p).model()
+    result = [
+        "{:>6s}".format(key),
+        "{:9.4f}".format(n),
+        "{:9.4f}".format(r),
+        "{:9.4f}".format(vga),
+        "{:9.4f}".format(vgn)
+    ]
     return "".join(result)
 
 
